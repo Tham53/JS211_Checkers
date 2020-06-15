@@ -2,19 +2,28 @@
 (function () {
 var app = {},
 	settings = {
-	scope: 'game-stage',
-	board: 'board',
 	score: {
-	element: 'score',
 	checkerRed: 'score__checker-red' ,
 	checkerBlue: 'score__checker-blue' },
+	scope: 'game-stage',
+	element: 'score',
+	board: 'board',
 	checker: {
 	red: {
 	name: 'Checker Red'},
 	blue: {
 	name: 'Checker Blue'}
-	}
-	};
+			}
+		};
+	
+	
+	app.setup = function () {
+	app.scope = document.getElementById(settings.scope),
+	app.board = app.scope.getElementsByClassName(settings.board)[0];
+		};
+		
+	
+	
 	app.init = function () {
 	app.setup();
 	app.build();
@@ -22,9 +31,6 @@ var app = {},
 	app.updateScore();
 	app.bind();
 	};
-	app.setup = function () {
-	app.scope = document.getElementById(settings.scope),
-	app.board = app.scope.getElementsByClassName(settings.board)[0];};
 
 //2. Board and checker pieces
 	app.build = function () {
@@ -70,7 +76,6 @@ var app = {},
 		}
 	};
 
-
 //5. Setup the process of current match.
 	app.move = function (target) {
 		if (app.selectedPiece == null) {
@@ -81,10 +86,8 @@ var app = {},
 			if (!app.getPiece(target)) {
 				app.selectedDestiny = target;
 				app.destinyPosition = app.getPosition(target);
-
 				app.jump();
 				app.resetVars();
-
 				// app.checkMove();
 				// app.setMatchPosition();
 			}
@@ -101,7 +104,6 @@ var app = {},
 		if (piece) {
 			app.selectedPiece = piece;
 			pieceType = app.getPieceType(piece);
-
 			if (app.isValidPiece(pieceType)) {
 				app.selectedSquare = square;
 				app.selectedPiece.classList.add('selected');
@@ -112,7 +114,6 @@ var app = {},
 		}
 	};
 
-
 	//Check if there is piece in the square.
 	app.getPiece = function (square) {
 		return square.getElementsByClassName('board__piece')[0] || false;	
@@ -120,7 +121,6 @@ var app = {},
 
 	app.isValidPiece = function (pieceType, isToCapture) {
 		var captureFlag = isToCapture || false;
-
 		if (captureFlag) {
 			return ((app.isCheckerRed && pieceType === 'checker-blue') || (!app.isCheckerRed && pieceType === 'checker-red')) ? true : false;
 		}
@@ -129,23 +129,18 @@ var app = {},
 		}
 	};
 
-
-	//Check if selected piece is king.
+	//Check if selected piece is a king.
 	app.isKing = function (piece) {
 		return piece.classList.contains('king');
 	};
-
-
 
 	//Set piece like king.
 	app.setKing = function (piece) {
 		piece.classList.add('king');
 	};
 
-
 	app.setupPosibilities = function () {
 		var position = app.getPosition(app.selectedDestiny);
-
 		if (app.isKing(app.selectedPiece)) {
 			app.possibilities = [
 				{ y: (position.y - 1) , x: (position.x + 1) },
@@ -197,7 +192,6 @@ var app = {},
 		if (captured) {
 			captured.remove();
 		}
-
 		if (!app.isKing(app.selectedPiece) && destinyPos.y === 0 || destinyPos.y === 7) {
 			app.setKing(app.selectedPiece);
 		}
