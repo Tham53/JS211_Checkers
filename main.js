@@ -1,36 +1,30 @@
 //1. Create overall function for setup, board and score
 (function () {
-	var app = {},
-		settings = {
-			scope: 'game-stage',
-			board: 'board',
-			score: {
-				element: 'score',
-				checkerRed: 'score__checker-red' ,
-				checkerBlue: 'score__checker-blue' 
-			},
-			checker: {
-				red: {
-					name: 'Checker Red'
-				},
-				blue: {
-					name: 'Checker Blue'
-				}
-			}
-		};
-
+var app = {},
+	settings = {
+	scope: 'game-stage',
+	board: 'board',
+	score: {
+	element: 'score',
+	checkerRed: 'score__checker-red' ,
+	checkerBlue: 'score__checker-blue' },
+	checker: {
+	red: {
+	name: 'Checker Red'},
+	blue: {
+	name: 'Checker Blue'}
+	}
+	};
 	app.init = function () {
-		app.setup();
-		app.build();
-		app.attach();
-		app.updateScore();
-		app.bind();
+	app.setup();
+	app.build();
+	app.attach();
+	app.updateScore();
+	app.bind();
 	};
-
 	app.setup = function () {
-		app.scope = document.getElementById(settings.scope),
-		app.board = app.scope.getElementsByClassName(settings.board)[0];
-	};
+	app.scope = document.getElementById(settings.scope),
+	app.board = app.scope.getElementsByClassName(settings.board)[0];};
 
 //2. Board and checker pieces
 	app.build = function () {
